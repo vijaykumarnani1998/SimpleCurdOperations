@@ -1,4 +1,4 @@
-package com.employee;
+package com.employee.controller;
 
 import java.util.List;
 import java.util.Optional;
@@ -16,6 +16,13 @@ import org.springframework.web.bind.annotation.RestController;
 import com.employee.model.Employee;
 import com.employee.service.EmployeeService;
 
+
+//Rest Controller Internally contains @Controller + @ResponseBody
+//ResponseBody: Responsible for converting Java Object to JSON object
+//RequestBody : Responsible for converting JSON  Object to Java object
+//PathVariable :Reads data from URL like  localhost://9090/employee/1
+//RequestParam : Reads data from URL like localhost://9090/employee/id?=1
+
 @RestController
 @RequestMapping("/emp")
 public class EmployeeController {
@@ -26,29 +33,29 @@ public class EmployeeController {
 	@PostMapping("/create")
 	public Employee saveEmployee(@RequestBody Employee employee)
 	{
-		return service.saveEmployee(employee);
-		
+		return service.saveEmployee(employee);	
 	}
 	
 	@GetMapping("/{id}")
-	public Employee getOneEmployee(@PathVariable Integer id)
+	public Optional<Employee> getOneEmployee(@PathVariable Integer id)
 	{
-		return service.getOneEmployeeById(id);
-		  
+		return service.getOneEmployeeById(id);	  
 	}
+	
 	@DeleteMapping("/{id}")
-	public String deleteEmployee(@PathVariable Integer id)
+	public void deleteEmployee(@PathVariable Integer id)
 	{
-		return service.deleteEmployee(id);
-		  
+		 service.deleteEmployeeById(id);	  
 	}
+	
 	@GetMapping("/all")
 	public List<Employee> getAllEmployees()
 	{
 		return service.getAllEmployees();
 	}
+	
 	@PutMapping("/update")
-	public String updateEmployee(@RequestBody Employee employee)
+	public Employee updateEmployee(@RequestBody Employee employee)
 	{
 		return service.updateEmployee(employee);
 		
